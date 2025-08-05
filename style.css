@@ -1,0 +1,217 @@
+:root {
+  --main-bg: #16213e;
+  --card-bg: #2f3d64;
+  --accent: #f6cd61;
+  --highlight: #79a8a9;
+  --text-light: #fff;
+  --text-dark: #131821;
+}
+
+/* Global body font and color */
+body {
+  background: var(--main-bg);
+  color: var(--text-light);
+  font-family: 'Libertinus Math', 'Segoe UI', Arial, sans-serif;
+  font-weight: 400;
+  margin: 0;
+}
+
+/* Navbar and footer backgrounds */
+.navbar,
+.footer-base {
+  background: var(--card-bg) !important;
+  color: var(--text-light);
+}
+
+/* Brand "Mohit Patel" with ping-pong animation */
+#brand-pingpong {
+  color: var(--accent) !important;
+  letter-spacing: .08em;
+  font-weight: 700;
+  font-size: 1.65rem;
+  transition: left 0.48s cubic-bezier(.76,.01,.38,1), color 0.22s;
+}
+#brand-pingpong.pingpong-animate {
+  position: fixed !important;
+  top: 16px;
+  left: 36px;
+  z-index: 1111;
+  animation: pingpong-move 4s ease-in-out infinite alternate;
+}
+@keyframes pingpong-move {
+  0% { left: 36px; }
+  100% { left: 24vw; }
+}
+
+/* Navbar links styling */
+.navbar-nav .nav-link {
+  color: var(--text-light);
+  font-weight: 600;
+  border-radius: 7px;
+  transition: background 0.5s, color 0.5s, box-shadow 0.5s;
+}
+.navbar-nav .nav-link.active,
+.navbar-nav .nav-link:focus,
+.navbar-nav .nav-link:hover {
+  color: var(--accent);
+  background: rgba(246,205,97,0.17);
+  box-shadow: 0 0 12px 1px var(--accent);
+}
+
+/* Section styles with golden top border */
+.section-card {
+  background: var(--card-bg);
+  border-radius: 22px;
+  box-shadow: 0 12px 32px -8px #0006;
+  margin-bottom: 38px;
+  border-top: 5px solid var(--accent);
+  padding: 48px 38px 38px 38px;
+}
+
+/* Section h2 titles */
+.section-card h2 {
+  color: var(--accent);
+  font-weight: 700;
+  margin-bottom: 24px;
+}
+
+/* Section paragraphs */
+.section-card p {
+  color: var(--text-light);
+  font-size: 1.13rem;
+  font-weight: 400;
+  letter-spacing: 0.01em;
+  transition: color 0.22s;
+}
+.section-card p:hover {
+  color: #fffedc;
+}
+
+/* Cards, Button, and Skills */
+.card,
+.btn,
+.skill-card {
+  border-radius: 15px;
+  border: none;
+  background: var(--card-bg);
+  box-shadow: 0 2px 12px #0a101a18;
+  transition: box-shadow 0.16s, background 0.17s, color 0.14s, transform 0.18s;
+}
+.card:hover,
+.skill-card:hover {
+  background: var(--highlight);
+  color: #0a101a;
+  box-shadow: 0 12px 23px 2px #79a8a924;
+  transform: scale(1.045) translateY(-2px);
+}
+
+/* Skill card icons */
+.skill-card .bx {
+  font-size: 2.3rem;
+  color: var(--accent);
+  margin-bottom: 4px;
+  display: block;
+}
+
+/* Buttons with golden accent */
+.btn-accent,
+.btn-accent:focus,
+.btn-accent:active {
+  background: var(--accent);
+  color: #0a101a;
+  font-weight: 700;
+  border-radius: 14px;
+  letter-spacing: 0.029em;
+  border: none;
+  box-shadow: 0 3px 12px var(--accent);
+  transition: background 0.23s, color 0.17s, box-shadow 0.2s;
+}
+.btn-accent:hover {
+  background: var(--highlight);
+  color: var(--main-bg);
+  box-shadow: 0 6px 30px 0 #79a8a954;
+}
+
+/* Icon links (home section) */
+.icon-link {
+  color: var(--accent);
+  font-size: 2rem;
+  margin: 0 0.55rem;
+  transition: color 0.27s, transform 0.27s;
+}
+.icon-link:hover {
+  color: var(--highlight);
+  transform: scale(1.17);
+}
+
+/* Typed.js cursor styling */
+#typed {
+  display: inline;
+  white-space: nowrap;
+  color: var(--accent);
+}
+.typed-cursor {
+  display: inline;
+  font-weight: 700;
+  color: var(--highlight);
+  animation: blink 0.760s infinite;
+  line-height: 1;
+}
+@keyframes blink {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Fade-in animation */
+.fade-in-up {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.92s forwards;
+  animation-delay: 0.11s;
+}
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Accessibility focus outline */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--highlight);
+  outline-offset: 2px;
+}
+
+/* Scrollbar styles */
+::-webkit-scrollbar-thumb {
+  background: var(--highlight);
+}
+::-webkit-scrollbar {
+  width: 8px;
+  background: var(--main-bg);
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--highlight) var(--main-bg);
+}
+
+/* Footer */
+.footer-base {
+  background: var(--card-bg) !important;
+  color: var(--accent);
+  font-weight: 500;
+  font-size: 1.08rem;
+  letter-spacing: 0.03em;
+  text-align: center;
+  padding: 1.1rem 0;
+  margin: 0;
+  width: 100%;
+}
+#home, .home-section {
+  padding-top: 90px; /* or match your navbar's height */
+}
