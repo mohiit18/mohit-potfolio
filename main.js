@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  // Typed.js initialization with smooth settings
+  // Typed.js initialization
   if (window.Typed) {
     new Typed("#typed", {
       strings: [
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Animate fade-in-up sections when visible
+  // Fade-in sections when visible
   const fadeEls = document.querySelectorAll('.fade-in-up');
   if ('IntersectionObserver' in window) {
     const observer = new IntersectionObserver(entries => {
@@ -28,44 +28,57 @@ document.addEventListener('DOMContentLoaded', function () {
       });
     }, { threshold: 0.12 });
     fadeEls.forEach(el => observer.observe(el));
-  } else { fadeEls.forEach(el => el.style.opacity = 1); }
+  } else {
+    fadeEls.forEach(el => el.style.opacity = 1);
+  }
 
-  // Smooth fade nav highlight based on scroll
-  function smoothNavFade() {
-    const navLinks = document.querySelectorAll('.navbar-nav .nav-link');
-    navLinks.forEach(link => {
-      link.style.transition = 'color 0.5s ease, background 0.5s ease, box-shadow 0.5s ease';
-      link.classList.remove('active');
-      link.style.color = '';
-      link.style.background = '';
-      link.style.boxShadow = '';
+  // Single-page app style navigation: show one section at a time
+  function showSection(id) {
+    document.querySelectorAll('main > section').forEach(sec => {
+      sec.classList.add('hide-section');
+      sec.classList.remove('section-active');
     });
+    const active = document.getElementById(id);
+    if (active) {
+      active.classList.remove('hide-section');
+      active.classList.add('section-active');
+    } else {
+      document.getElementById('home').classList.remove('hide-section');
+      document.getElementById('home').classList.add('section-active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
 
-    let currentSectionId = '';
+  // Navigation links click handler
+  document.querySelectorAll('[data-section]').forEach(link => {
+    link.addEventListener('click', function (e) {
+      e.preventDefault();
+      const sec = this.getAttribute('data-section');
+      if (!sec) return;
 
-    navLinks.forEach(link => {
-      const section = document.querySelector(link.getAttribute('href'));
-      if (section) {
-        const rect = section.getBoundingClientRect();
-        if (rect.top <= window.innerHeight / 2 && rect.bottom >= window.innerHeight / 2) {
-          currentSectionId = link.getAttribute('href');
+      // Update nav highlighting for all nav links & home nav links
+      document.querySelectorAll('.navbar-nav .nav-link').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('.glass-navlink').forEach(l => l.classList.remove('active'));
+      document.querySelectorAll('[data-section="' + sec + '"]').forEach(l => l.classList.add('active'));
+
+      showSection(sec);
+
+      // Close nav on mobile
+      const navCollapse = document.getElementById('navCollapse');
+      if (navCollapse && navCollapse.classList.contains('show')) {
+        if (typeof bootstrap !== "undefined" && bootstrap.Collapse) {
+          bootstrap.Collapse.getOrCreateInstance(navCollapse).hide();
+        } else {
+          navCollapse.classList.remove('show');
         }
       }
     });
+  });
 
-    navLinks.forEach(link => {
-      if (link.getAttribute('href') === currentSectionId) {
-        link.classList.add('active');
-        link.style.color = 'var(--accent)';
-        link.style.background = 'rgba(255,184,35,0.10)';
-        link.style.boxShadow = '0 0 10px 1px #FFB82344';
-      }
-    });
-  }
-  window.addEventListener('scroll', smoothNavFade);
-  smoothNavFade();
+  // Initially show home section
+  showSection('home');
 
-  // Contact Form - fake submit feedback
+  // Contact form front-end only submit feedback
   const contactForm = document.getElementById("contact-form");
   if (contactForm) {
     contactForm.addEventListener("submit", function (e) {
@@ -79,15 +92,13 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   }
 
-  // Brand ping-pong animation with smooth transition & left spacing
+  // Ping-pong animation toggle on navbar brand
   window.addEventListener('scroll', function () {
     const navBrand = document.getElementById('brand-pingpong');
     const homeSection = document.getElementById('home');
     if (!navBrand || !homeSection) return;
-
     const scrollY = window.scrollY || document.documentElement.scrollTop;
     const triggerY = homeSection.offsetHeight - 80;
-
     if (scrollY > triggerY) {
       if (!navBrand.classList.contains('pingpong-animate')) {
         navBrand.style.transition = 'left 0.8s ease-in-out';
